@@ -17,7 +17,16 @@ subprojects {
 }
 
 tasks {
+
+    jar {
+        from(project(":main-bot").sourceSets["main"].output)
+        manifest {
+            attributes("Main-Class" to "${project.properties["group"] as String}.skblebot.SkollobleTesterBot")
+        }
+    }
+
     create<Task>("stage") {
         dependsOn(":build")
     }
+
 }

@@ -1,1 +1,1 @@
-web: java -jar main-bot/build/libs/main-bot-1.0.0.jar $BOT_TOKEN
+web: java -jar build/libs/SkollobleTesterBot-1.0.0.jar $BOT_TOKEN

@@ -1,7 +1,11 @@
-import org.jetbrains.kotlin.gradle.targets.js.testing.karma.processWebpackName
-
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
 }
 
 dependencies {

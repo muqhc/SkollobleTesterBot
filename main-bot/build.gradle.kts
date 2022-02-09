@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.testing.karma.processWebpackName
+
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
@@ -16,8 +18,10 @@ sourceSets {
     }
 }
 
-tasks.jar {
-    manifest {
-        attributes("Main-Class" to "${properties["group"] as String}.skblebot.SkollobleTesterBot")
+tasks {
+    jar {
+        manifest {
+            attributes("Main-Class" to "${project.properties["group"] as String}.skblebot.SkollobleTesterBot")
+        }
     }
 }

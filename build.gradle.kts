@@ -15,3 +15,9 @@ subprojects {
         implementation("io.github.muqhc:skolloble-to-xml:1.2.3")
     }
 }
+
+tasks {
+    create<Task>("stage") {
+        dependsOn(":build")
+    }
+}

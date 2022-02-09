@@ -1,0 +1,1 @@
+web: java -jar main-bot/build/libs/main-bot-1.0.0.jar

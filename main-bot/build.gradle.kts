@@ -1,7 +1,3 @@
-plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-}
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(16))

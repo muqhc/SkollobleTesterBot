@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.6.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 java {
@@ -16,9 +17,18 @@ allprojects {
 
 subprojects {
     apply(plugin="org.jetbrains.kotlin.jvm")
+    apply(plugin="com.github.johnrengelman.shadow")
     dependencies {
         implementation(kotlin("stdlib"))
         implementation("io.github.muqhc:skolloble-to-xml:1.2.3")
+    }
+}
+
+sourceSets {
+    all {
+        dependencies {
+            implementation(project(":main-bot"))
+        }
     }
 }
 
@@ -31,8 +41,15 @@ tasks {
         }
     }
 
+    shadowJar {
+        dependsOn(":main-bot:shadowJar")
+        manifest {
+            attributes("Main-Class" to "${project.properties["group"] as String}.skblebot.SkollobleTesterBot")
+        }
+    }
+
     create<Task>("stage") {
-        dependsOn(":build")
+        dependsOn(":shadowJar")
     }
 
 }

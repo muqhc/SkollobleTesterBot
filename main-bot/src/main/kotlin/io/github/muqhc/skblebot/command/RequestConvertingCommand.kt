@@ -19,7 +19,7 @@ class RequestConvertingCommand: ICommand {
         message.channel.block()?.createMessage(
             MessageCreateSpec.builder()
                 .content("<@${message.author.get().userData.id()}> Here Result!")
-                .addFile("${message.author.get().username}'s file ${message.timestamp}.$fileFormat",StringBufferInputStream(skble))
+                .addFile("${fileFormat}_file_generated_by_${message.author.get().username}_${message.timestamp}.$fileFormat",StringBufferInputStream(skble))
                 .build()
         )?.subscribe()
     }

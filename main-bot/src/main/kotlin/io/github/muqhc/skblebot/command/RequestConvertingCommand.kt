@@ -18,8 +18,8 @@ class RequestConvertingCommand: ICommand {
         if (message.content.matches(regexHtml)) fileFormat = "html"
         message.channel.block()?.createMessage(
             MessageCreateSpec.builder()
-                .content("Here Result!")
-                .addFile("${message.author}'s file ${message.timestamp}.$fileFormat",StringBufferInputStream(skble))
+                .content("<@${message.author.get().userData.id()}> Here Result!")
+                .addFile("${message.author.get().username}'s file ${message.timestamp}.$fileFormat",StringBufferInputStream(skble))
                 .build()
         )?.subscribe()
     }

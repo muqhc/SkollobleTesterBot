@@ -8,7 +8,7 @@ import io.github.muqhc.skblebot.listener.CommandListener
 
 class SkollobleTesterBot(val token: String): Thread() {
 
-    fun runBot() {
+    fun runDiscordBot() {
         val client = DiscordClient.create(token)
         val gateway = client.login().block()
 
@@ -24,7 +24,7 @@ class SkollobleTesterBot(val token: String): Thread() {
     }
 
     override fun run() {
-        runBot()
+        runDiscordBot()
     }
 
     companion object {

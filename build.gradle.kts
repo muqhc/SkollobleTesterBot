@@ -27,7 +27,7 @@ subprojects {
 sourceSets {
     all {
         dependencies {
-            implementation(project(":main-bot"))
+            subprojects.forEach { implementation(project(":${it.name}")) }
         }
     }
 }
@@ -35,14 +35,14 @@ sourceSets {
 tasks {
 
     jar {
-        from(project(":main-bot").sourceSets["main"].output)
+        subprojects.forEach { from(project(":${it.name}").sourceSets["main"].output) }
         manifest {
             attributes("Main-Class" to "${project.properties["group"] as String}.skblebot.SkollobleTesterBot")
         }
     }
 
     shadowJar {
-        dependsOn(":main-bot:shadowJar")
+        subprojects.forEach { dependsOn(":${it.name}:shadowJar") }
         manifest {
             attributes("Main-Class" to "${project.properties["group"] as String}.skblebot.SkollobleTesterBot")
         }

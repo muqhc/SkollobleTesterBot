@@ -2,6 +2,7 @@ package io.github.muqhc.skblebot
 
 import discord4j.core.DiscordClient
 import discord4j.core.event.domain.message.MessageCreateEvent
+import io.github.muqhc.skblebot.command.HelpCommand
 import io.github.muqhc.skblebot.command.RequestConvertingCommand
 import io.github.muqhc.skblebot.listener.CommandListener
 
@@ -14,6 +15,7 @@ class SkollobleTesterBot(val token: String): Thread() {
 
         val commandListener = CommandListener {
             +RequestConvertingCommand()
+            +HelpCommand()
         }
 
         gateway!!

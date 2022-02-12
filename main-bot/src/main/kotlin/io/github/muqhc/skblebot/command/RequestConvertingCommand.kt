@@ -39,12 +39,7 @@ ${message.content}
         return xml
     }
 
-    fun deleteMessage(event: MessageCreateEvent) {
-        event.message.delete().subscribe()
-    }
-
     override fun handle(event: MessageCreateEvent) {
         sendGenerated(event).let(::println)
-        deleteMessage(event)
     }
 }

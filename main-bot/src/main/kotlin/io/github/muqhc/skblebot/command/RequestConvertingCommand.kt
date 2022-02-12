@@ -11,7 +11,7 @@ class RequestConvertingCommand: ICommand {
 
     override fun checkRequired(event: MessageCreateEvent): Boolean = regex.matches(event.message.content)
 
-    fun sendGenerated(event: MessageCreateEvent) {
+    fun sendGenerated(event: MessageCreateEvent): String {
         val message = event.message
         var fileFormat = "xml"
         if (message.content.matches(regexHtml)) fileFormat = "html"
@@ -34,8 +34,9 @@ ${message.content}
                     StringBufferInputStream(xml)
                 )
                 .build()
-        )?.subscribe()
+            )?.subscribe()
         }
+        return xml
     }
 
     fun deleteMessage(event: MessageCreateEvent) {

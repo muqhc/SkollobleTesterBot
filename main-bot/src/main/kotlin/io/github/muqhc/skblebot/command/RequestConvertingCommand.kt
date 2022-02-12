@@ -43,7 +43,7 @@ ${message.content}
     }
 
     override fun handle(event: MessageCreateEvent) {
-        sendGenerated(event)
+        sendGenerated(event).let(::println)
         deleteMessage(event)
     }
 }

@@ -5,7 +5,7 @@ import discord4j.core.spec.MessageCreateSpec
 import io.github.muqhc.skollobletoxml.skollobleToXml
 import java.io.StringBufferInputStream
 
-class RequestConvertingCommand: ICommand {
+class RequestConvertingCommand: AbstractCommand() {
     val regex = "^ *; *(skolloble|skble)( +(xml|html))? *;(.|\n)*$".toRegex()
     val regexHtml = "^ *; *(skolloble|skble) +html *;(.|\n)*$".toRegex()
 

@@ -19,11 +19,7 @@ class SkollobleTesterBot(val token: String, val ownerIDs: List<String>): Thread(
             +HelpCommand()
             +AnnounceCommand(ownerIDs,
                 gateway.guilds.buffer().blockFirst().mapNotNull { it.owner.block().privateChannel.block() })
-        }
-
-        gateway!!
-            .on(MessageCreateEvent::class.java)
-            .subscribe(commandListener::handle)
+        }.apply { register() }
 
         gateway.onDisconnect().block()
     }

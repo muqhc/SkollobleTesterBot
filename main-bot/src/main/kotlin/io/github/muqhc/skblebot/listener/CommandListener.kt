@@ -5,7 +5,7 @@ import discord4j.core.event.domain.message.MessageCreateEvent
 import io.github.muqhc.skblebot.command.AbstractCommand
 
 
-class CommandListener(val gateway: GatewayDiscordClient) {
+class CommandListener(override val gateway: GatewayDiscordClient): Listener {
 
     constructor(gateway: GatewayDiscordClient, init: CommandListener.() -> Unit) : this(gateway) { init() }
 
@@ -22,4 +22,9 @@ class CommandListener(val gateway: GatewayDiscordClient) {
         }
     }
 
+    override fun register() {
+        gateway
+            .on(MessageCreateEvent::class.java)
+            .subscribe(this::handle)
+    }
 }

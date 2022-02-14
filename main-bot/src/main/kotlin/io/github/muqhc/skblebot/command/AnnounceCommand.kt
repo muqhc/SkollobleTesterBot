@@ -8,7 +8,7 @@ import discord4j.core.spec.MessageCreateSpec
 import discord4j.rest.util.Color
 
 class AnnounceCommand(val ownerIDs: List<String>, val mappingCommand: SelectEventChannelCommand) : AbstractCommand() {
-    val regex = "^ *; *(announce|notice|warning|warn|note) *; *\n(.|\n)*$".toRegex()
+    val regex = "^ *; *(announce|notice|warning|warn|note|event) *; *\n(.|\n)*$".toRegex()
 
     fun makeLongSpace(spaceCount: Int): String {
         var result = ""
@@ -18,8 +18,9 @@ class AnnounceCommand(val ownerIDs: List<String>, val mappingCommand: SelectEven
 
     fun getEmbedTemplate(firstLine: String) = when {
         firstLine.contains("announce")  -> EmbedCreateSpec.builder().color(Color.MAGENTA).title("**!--Announce--!**${makeLongSpace(10)}~")
-        firstLine.contains("notice") ->    EmbedCreateSpec.builder().color(Color.MOON_YELLOW).title("**!--Notice--!**${makeLongSpace(10)}~")
+        firstLine.contains("notice") ->    EmbedCreateSpec.builder().color(Color.RUBY).title("**!--Notice--!**${makeLongSpace(10)}~")
         firstLine.contains("warn") ->      EmbedCreateSpec.builder().color(Color.RED).title("**!--Warning--!**${makeLongSpace(10)}~")
+        firstLine.contains("event") ->     EmbedCreateSpec.builder().color(Color.MOON_YELLOW).title("**+++Event+++**${makeLongSpace(10)}~")
         else -> EmbedCreateSpec.builder().color(Color.GRAY).title("**++Note++**${makeLongSpace(10)}~")
     }
 

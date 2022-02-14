@@ -11,7 +11,7 @@ class CommandListener(override val gateway: GatewayDiscordClient): Listener {
 
     val commands: MutableList<AbstractCommand> = mutableListOf()
 
-    operator fun AbstractCommand.unaryPlus() = also {
+    operator fun <T : AbstractCommand> T.unaryPlus() = also {
         it.gateway = this@CommandListener.gateway
         commands.add(it)
     }

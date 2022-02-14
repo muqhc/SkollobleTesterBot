@@ -20,7 +20,7 @@ subprojects {
     apply(plugin="com.github.johnrengelman.shadow")
     dependencies {
         implementation(kotlin("stdlib"))
-        implementation("io.github.muqhc:skolloble-to-xml:1.2.3")
+        implementation("io.github.muqhc:skolloble-to-xml:1.2.4")
     }
 }
 

@@ -4,7 +4,7 @@ import discord4j.core.`object`.component.ActionRow
 import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.core.spec.MessageCreateSpec
 import discord4j.discordjson.Id
-import io.github.muqhc.skblebot.button.ContentAndTextFileDMButton
+import io.github.muqhc.skblebot.action.button.ContentAndTextFileDMButton
 import io.github.muqhc.skollobletoxml.skollobleToXml
 import java.time.Instant
 
@@ -51,7 +51,7 @@ ${message.content}
 
         val messageSpec = dmSpec.withComponents(ActionRow.of(dmButton.component))
 
-        dmButton.register(message.channel,messageSpec)
+        dmButton.publish(message.channel,messageSpec)
 
         return xml
     }

@@ -1,27 +1,37 @@
 package io.github.muqhc.skblebot
 
 import discord4j.core.DiscordClient
-import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.GatewayDiscordClient
 import io.github.muqhc.skblebot.command.AnnounceCommand
 import io.github.muqhc.skblebot.command.HelpCommand
 import io.github.muqhc.skblebot.command.RequestConvertingCommand
+import io.github.muqhc.skblebot.command.SelectEventChannelCommand
 import io.github.muqhc.skblebot.listener.CommandListener
+import java.time.Instant
 
 
 class SkollobleTesterBot(val token: String, val ownerIDs: List<String>): Thread() {
 
     fun runDiscordBot() {
+
         val client = DiscordClient.create(token)
         val gateway = client.login().block()
+
+        Runtime.getRuntime().addShutdownHook(Thread {
+            onKilled(gateway)
+        })
 
         val commandListener = CommandListener(gateway) {
             +RequestConvertingCommand()
             +HelpCommand()
-            +AnnounceCommand(ownerIDs,
-                gateway.guilds.buffer().blockFirst().mapNotNull { it.owner.block().privateChannel.block() })
+            +AnnounceCommand(ownerIDs, +SelectEventChannelCommand())
         }.apply { register() }
 
         gateway.onDisconnect().block()
+    }
+
+    fun onKilled(gateway: GatewayDiscordClient) {
+        println("This bot are disconnected! [${Instant.now()}]")
     }
 
     override fun run() {

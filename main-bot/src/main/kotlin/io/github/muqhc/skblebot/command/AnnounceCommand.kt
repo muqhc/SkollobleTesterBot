@@ -1,12 +1,12 @@
 package io.github.muqhc.skblebot.command
 
-import discord4j.core.`object`.entity.channel.PrivateChannel
+import discord4j.core.`object`.entity.channel.MessageChannel
 import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.core.spec.MessageCreateSpec
 import discord4j.rest.util.Color
 
-class AnnounceCommand(val ownerIDs: List<String>, val channels: List<PrivateChannel>) : AbstractCommand() {
+class AnnounceCommand(val ownerIDs: List<String>, val mappingCommand: SelectEventChannelCommand) : AbstractCommand() {
     val regex = "^ *; *(announce|notice|warning|warn|note) *; *\n(.|\n)*$".toRegex()
 
     fun makeLongSpace(spaceCount: Int): String {
@@ -28,11 +28,13 @@ class AnnounceCommand(val ownerIDs: List<String>, val channels: List<PrivateChan
     override fun handle(event: MessageCreateEvent) {
         val message = event.message
         val (embed,content) = message.content.split("\n").run { getEmbedTemplate(first()) to drop(1).joinToString("\n") }
-        channels.forEach { it.createMessage(MessageCreateSpec.builder().addEmbed(embed
-            .description("⠀\n$content\n\n\n⠀")
-            .footer(gateway.self.block().username,"https://cdn.discordapp.com/avatars/940828335754334209/efc1bfd6dd576e0728fa80c1a1bf38d3.webp?size=20")
-            .timestamp(message.timestamp)
-            .build()
+        mappingCommand.announceChannelMap.forEach { (guildId, channelId) ->
+            gateway.getGuildById(guildId).block()?.getChannelById(channelId)?.ofType(MessageChannel::class.java)?.block()
+                ?.createMessage(MessageCreateSpec.builder().addEmbed(embed
+                    .description("⠀\n$content\n\n\n⠀")
+                    .footer(gateway.self.block().username,"https://cdn.discordapp.com/avatars/940828335754334209/efc1bfd6dd576e0728fa80c1a1bf38d3.webp?size=20")
+                    .timestamp(message.timestamp)
+                    .build()
         ).build())?.subscribe() }
     }
 }

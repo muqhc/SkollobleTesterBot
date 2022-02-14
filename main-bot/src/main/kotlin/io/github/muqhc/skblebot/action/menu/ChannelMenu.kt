@@ -15,7 +15,7 @@ class ChannelMenu(gateway: GatewayDiscordClient, val command: SelectEventChannel
     )
 
     override fun onPreviousInteract(event: SelectMenuInteractionEvent): InteractionApplicationCommandCallbackReplyMono {
-        command.announceChannelMap[guild.block().id] = Snowflake.of(event.values[0])
+        command.announceChannelMap[guild.block().id.asString()] = event.values[0]
         return event.reply("${event.interaction.user.username} selected ${event.values}!").withEphemeral(true)
     }
 }

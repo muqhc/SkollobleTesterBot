@@ -1,5 +1,6 @@
 package io.github.muqhc.skblebot.command
 
+import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.channel.MessageChannel
 import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.core.spec.EmbedCreateSpec
@@ -29,7 +30,7 @@ class AnnounceCommand(val ownerIDs: List<String>, val mappingCommand: SelectEven
         val message = event.message
         val (embed,content) = message.content.split("\n").run { getEmbedTemplate(first()) to drop(1).joinToString("\n") }
         mappingCommand.announceChannelMap.forEach { (guildId, channelId) ->
-            gateway.getGuildById(guildId).block()?.getChannelById(channelId)?.ofType(MessageChannel::class.java)?.block()
+            gateway.getGuildById(Snowflake.of(guildId)).block()?.getChannelById(Snowflake.of(channelId))?.ofType(MessageChannel::class.java)?.block()
                 ?.createMessage(MessageCreateSpec.builder().addEmbed(embed
                     .description("⠀\n$content\n\n\n⠀")
                     .footer(gateway.self.block().username,"https://cdn.discordapp.com/avatars/940828335754334209/efc1bfd6dd576e0728fa80c1a1bf38d3.webp?size=20")

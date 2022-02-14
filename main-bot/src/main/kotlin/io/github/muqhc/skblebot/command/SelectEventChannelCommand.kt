@@ -11,7 +11,7 @@ import io.github.muqhc.skblebot.action.IActionComponentManager
 import io.github.muqhc.skblebot.action.menu.ChannelMenu
 
 class SelectEventChannelCommand() : AbstractCommand() {
-    val announceChannelMap: MutableMap<Snowflake,Snowflake> = mutableMapOf()
+    val announceChannelMap: MutableMap<String,String> = mutableMapOf()
     override fun checkRequired(event: MessageCreateEvent): Boolean = Regex(" *; *dashboard *; *").matches(event.message.content)
     override fun handle(event: MessageCreateEvent) {
         val menu = ChannelMenu(gateway,this,event.guild)

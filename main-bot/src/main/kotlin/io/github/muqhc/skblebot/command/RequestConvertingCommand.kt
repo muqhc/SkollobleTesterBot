@@ -20,10 +20,13 @@ class RequestConvertingCommand(): AbstractCommand() {
                 xml.byteInputStream()
             ).build()
 
-    override fun checkRequired(event: MessageCreateEvent): Boolean = try { regex.matches(event.message.content.split("\n")[0]) } catch (e: Exception) {println("====match fail====");false}
+    override fun checkRequired(event: MessageCreateEvent): Boolean = try { regex.matches(event.message.content.split("\n")[0]) } catch (e: Exception) {
+        println("====match fail====")
+        false
+    }
 
-    fun sendGenerated(event: MessageCreateEvent): String {
-        retrun try {
+    fun sendGenerated(event: MessageCreateEvent) {
+        try {
             val message = event.message
             message.content.let(::println)
             var fileFormat = "xml"
@@ -54,11 +57,8 @@ ${message.content}
             val messageSpec = dmSpec.withComponents(ActionRow.of(dmButton.component))
 
             dmButton.publish(message.channel,messageSpec)
-
-            xml
         } catch (e: Exception) {
             println("====Match Fail====")
-            "====Match Fail===="
         }
     }
 

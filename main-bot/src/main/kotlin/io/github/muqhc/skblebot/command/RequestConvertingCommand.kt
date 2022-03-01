@@ -24,6 +24,7 @@ class RequestConvertingCommand(): AbstractCommand() {
 
     fun sendGenerated(event: MessageCreateEvent): String {
         val message = event.message
+        message.content.let(::println)
         var fileFormat = "xml"
         if (message.content.matches(regexHtml)) fileFormat = "html"
         val xml =
@@ -57,6 +58,6 @@ ${message.content}
     }
 
     override fun handle(event: MessageCreateEvent) {
-        sendGenerated(event).let(::println)
+        sendGenerated(event)
     }
 }

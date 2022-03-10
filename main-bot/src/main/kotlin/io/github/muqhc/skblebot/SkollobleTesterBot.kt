@@ -3,10 +3,7 @@ package io.github.muqhc.skblebot
 import com.google.cloud.firestore.Firestore
 import discord4j.core.DiscordClient
 import discord4j.core.GatewayDiscordClient
-import io.github.muqhc.skblebot.command.AnnounceCommand
-import io.github.muqhc.skblebot.command.HelpCommand
-import io.github.muqhc.skblebot.command.RequestConvertingCommand
-import io.github.muqhc.skblebot.command.SelectEventChannelCommand
+import io.github.muqhc.skblebot.command.*
 import io.github.muqhc.skblebot.db.dbAPIInitialize
 import io.github.muqhc.skblebot.listener.CommandListener
 import java.time.Instant
@@ -41,6 +38,7 @@ class SkollobleTesterBot(val token: String, val ownerIDs: List<String>): Thread(
             +RequestConvertingCommand()
             +HelpCommand()
             +AnnounceCommand(ownerIDs, +eventChannelCommand)
+            +RequestBackConvertCommand()
         }.apply { register() }
 
         gateway.onDisconnect().block()

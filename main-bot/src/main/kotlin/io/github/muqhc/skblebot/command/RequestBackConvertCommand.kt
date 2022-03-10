@@ -12,9 +12,10 @@ class RequestBackConvertCommand: AbstractCommand() {
 
     override fun handle(event: MessageCreateEvent) {
         val message = event.message
-        val skollobleStream = message.attachments.find { it.filename.matches(Regex("$.+[.](xml|html)^")) }?.url?.let {
+        val skollobleStream = message.attachments?.find { it.filename.matches(Regex("$.+[.](xml|html)^")) }?.url?.let {
             URL(it).openStream().readAllBytes().decodeToString().let(::xmlToSkolloble).byteInputStream()
         } ?: ";Invaild Input;".byteInputStream()
+        skollobleStream.readBytes().decodeToString().let(::println)
         message.channel.block().createMessage(MessageCreateSpec.builder()
             .content("<@${message.author.get().userData.id()}> Here Result!")
             .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble.txt",skollobleStream))

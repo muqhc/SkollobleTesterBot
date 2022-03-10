@@ -8,7 +8,7 @@ import java.net.URL
 
 class RequestBackConvertCommand: AbstractCommand() {
     override fun checkRequired(event: MessageCreateEvent): Boolean =
-        event.message.content.matches(Regex("; *xml +to +(skolloble|skble) *; *")).also(::println)
+        event.message.content.matches(Regex("; *xml +to +(skolloble|skble) *; *"))
 
     override fun handle(event: MessageCreateEvent) {
         val message = event.message
@@ -20,6 +20,6 @@ class RequestBackConvertCommand: AbstractCommand() {
             .content("<@${message.author.get().userData.id()}> Here Result!")
             .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble.txt",skollobleStream))
             .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble",skollobleStream))
-            .build())
+            .build())?.subscribe()
     }
 }

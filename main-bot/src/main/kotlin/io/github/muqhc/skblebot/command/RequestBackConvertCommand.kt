@@ -8,7 +8,7 @@ import java.net.URL
 
 class RequestBackConvertCommand: AbstractCommand() {
     override fun checkRequired(event: MessageCreateEvent): Boolean =
-        event.message.content.matches(Regex("; *xml +to +(skolloble|skble) *; *"))
+        event.message.content.matches(Regex("; *xml +to +(skolloble|skble) *; *")).also(::println)
 
     override fun handle(event: MessageCreateEvent) {
         val message = event.message

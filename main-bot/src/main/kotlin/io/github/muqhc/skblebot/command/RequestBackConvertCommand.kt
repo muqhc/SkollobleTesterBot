@@ -12,14 +12,13 @@ class RequestBackConvertCommand: AbstractCommand() {
 
     override fun handle(event: MessageCreateEvent) {
         val message = event.message
-        val skollobleStream = message.attachments?.find { it.filename.matches(Regex("$.+[.](xml|html)^")) }?.url?.let {
-            URL(it).openStream().readAllBytes().decodeToString().let(::xmlToSkolloble).byteInputStream()
-        } ?: ";Invaild Input;".byteInputStream()
-        skollobleStream.readBytes().decodeToString().let(::println)
+        val skolloble = message.attachments?.find { it.filename.matches(Regex("$.+[.](xml|html)^")) }?.url?.let {
+            URL(it).openStream().readAllBytes().decodeToString().let(::xmlToSkolloble)
+        } ?: ";Invaild Input;"
         message.channel.block().createMessage(MessageCreateSpec.builder()
             .content("<@${message.author.get().userData.id()}> Here Result!")
-            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble.txt",skollobleStream))
-            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble",skollobleStream))
+            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble.txt",skolloble.byteInputStream()))
+            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble",skolloble.byteInputStream()))
             .build())?.subscribe()
     }
 }

@@ -3,6 +3,7 @@ package io.github.muqhc.skblebot.command
 import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.core.spec.MessageCreateFields
 import discord4j.core.spec.MessageCreateSpec
+import io.github.muqhc.xmltoskolloble.xmlToSkolloble
 import java.net.URL
 
 class RequestBackConvertCommand: AbstractCommand() {
@@ -11,13 +12,13 @@ class RequestBackConvertCommand: AbstractCommand() {
 
     override fun handle(event: MessageCreateEvent) {
         val message = event.message
-        val skolloble = message.attachments.find { it.filename.matches(Regex("$.[.](xml|html)^")) }!!.url.let {
-            URL(it).openStream().readAllBytes().inputStream()
+        val skollobleStream = message.attachments.find { it.filename.matches(Regex("$.+[.](xml|html)^")) }!!.url.let {
+            URL(it).openStream().readAllBytes().decodeToString().let(::xmlToSkolloble).byteInputStream()
         }
         message.channel.block().createMessage(MessageCreateSpec.builder()
             .content("<@${message.author.get().userData.id()}> Here Result!")
-            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble.txt",skolloble))
-            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble",skolloble))
+            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble.txt",skollobleStream))
+            .addFile(MessageCreateFields.File.of("${message.author.get().username}_${message.timestamp}.skolloble",skollobleStream))
             .build())
     }
 }

@@ -12,7 +12,7 @@ class RequestBackConvertCommand: AbstractCommand() {
 
     override fun handle(event: MessageCreateEvent) {
         val message = event.message
-        val skolloble = try { message?.attachments?.get(0)?.url?.let {
+        val skolloble = try { message.attachments[0]?.url?.let {
             URL(it).openStream().readAllBytes().decodeToString().let(::xmlToSkolloble)
         } ?: ";Invaild Input;" } catch (e: Exception) { "Invaild".also { e.printStackTrace() } }
         message.channel.block().createMessage(MessageCreateSpec.builder()

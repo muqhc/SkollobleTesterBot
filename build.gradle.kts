@@ -21,7 +21,7 @@ subprojects {
     dependencies {
         implementation(kotlin("stdlib"))
         implementation("io.github.muqhc:skolloble-to-xml:1.4.0")
-        implementation("io.github.muqhc:xml-to-skolloble:1.2.0")
+        implementation("io.github.muqhc:xml-to-skolloble:1.2.1")
         implementation("com.google.firebase:firebase-admin:8.1.0")
     }
 }

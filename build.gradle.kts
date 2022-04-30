@@ -20,7 +20,7 @@ subprojects {
     apply(plugin="com.github.johnrengelman.shadow")
     dependencies {
         implementation(kotlin("stdlib"))
-        implementation("io.github.muqhc:skolloble-to-xml:1.4.1")
+        implementation("io.github.muqhc:skolloble-to-xml:1.5.0")
         implementation("io.github.muqhc:xml-to-skolloble:1.3.0")
         implementation("com.google.firebase:firebase-admin:8.1.0")
     }

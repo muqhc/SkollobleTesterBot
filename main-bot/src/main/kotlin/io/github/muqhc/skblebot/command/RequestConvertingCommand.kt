@@ -12,8 +12,8 @@ import java.net.URL
 import java.time.Instant
 
 class RequestConvertingCommand(): AbstractCommand() {
-    val regex = "^ *; *(skolloble|skble)( +(xml|html))? *; *$".toRegex()
-    val regexHtml = "^ *; *(skolloble|skble) +html *; *$".toRegex()
+    val regex = "^ *; *(skolloble|skble)( +to +(xml|html))? *; *$".toRegex()
+    val regexHtml = "^ *; *(skolloble|skble) +to +html *; *$".toRegex()
 
     fun genMessageSpec(id: Id, username: String, timestamp: Instant, xml: String, fileFormat: String) =
         MessageCreateSpec.builder()

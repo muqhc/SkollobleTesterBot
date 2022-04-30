@@ -40,7 +40,7 @@ class RequestConvertingCommand(): AbstractCommand() {
 ${skollobleToXml(content).substring(1)}
 <!-- ======ORIGINAL======- -!>
 $content
-; author: ${message.author.get().username} ;
+* author: ${message.author.get().username} *
 <- -=======================-->"""
 
         val channel = message.channel.block()
